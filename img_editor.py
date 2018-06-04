@@ -7,16 +7,16 @@ Created on Mon Jun  4 00:09:20 2018
 
 import numpy as np
 import cv2
-"""from tkinter import filedialog
+from tkinter import filedialog
 from tkinter import *
  
-root = Tk()
-root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
-print (root.filename)"""
+choose_window = Tk()
+image =  filedialog.askopenfilename(initialdir = "/",title = "Select a picture to edit",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+choose_window.destroy()
 
 def dummy(v):
     pass
-image_original = cv2.imread("test.jpeg")
+image_original = cv2.imread(image)
 image_copy = image_original.copy()
 cv2.namedWindow("ImgEditor v1.0")
 cv2.createTrackbar("Contrast","ImgEditor v1.0",1,200,dummy)
