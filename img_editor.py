@@ -9,6 +9,8 @@ import numpy as np
 import cv2
 from tkinter import filedialog
 from tkinter import *
+import imutils
+
 
 choose_window = Tk()
 choose_window.withdraw()
@@ -55,9 +57,9 @@ for c in image:
     else:
         start_index += 1
 filename = image[:start_index-1]
-print(filename)
+
 extension = image[start_index-1:]
-print(extension)
+
 image_copy = image_original.copy()
 
 gray_original = cv2.cvtColor(image_original,cv2.COLOR_BGR2GRAY)
@@ -69,12 +71,15 @@ cv2.createTrackbar("Contrast","ImgEditor v1.0",1,200,dummy)
 cv2.createTrackbar("Brightness", "ImgEditor v1.0", 100, 200, dummy)
 cv2.createTrackbar("Filter", "ImgEditor v1.0", 0, len(kernels)-1, dummy)
 cv2.createTrackbar("Grayscale","ImgEditor v1.0",0,1, dummy)
-
+cv2.createTrackbar("Rotation","ImgEditor v1.0",0,360,dummy)
 while True:
     is_grayscale = cv2.getTrackbarPos("Grayscale","ImgEditor v1.0")
+    angle = cv2.getTrackbarPos("Rotation","ImgEditor v1.0")
     if is_grayscale == 0:
+        image_copy = imutils.rotate_bound(image_copy,angle)
         cv2.imshow("ImgEditor v1.0",image_copy)
     else:
+        gray_copy = imutils.rotate_bound(gray_copy,angle)
         cv2.imshow("ImgEditor v1.0",gray_copy)
     k = cv2.waitKey(1) & 0xFF
     if k == ord('q') or k == ord('Q'):
